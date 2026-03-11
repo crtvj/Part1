@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message For You</title>
 
+<style>
+
+body{
+background: black;
+color: white;
+font-family: Arial, sans-serif;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+text-align:center;
+flex-direction:column;
+overflow:hidden;
+}
+
+h1{
+font-size:28px;
+animation:fade 2s;
+}
+
+p{
+font-size:20px;
+max-width:500px;
+animation:fade 3s;
+}
+
+button{
+margin-top:30px;
+padding:12px 25px;
+font-size:18px;
+border:none;
+border-radius:30px;
+background:#ff4d6d;
+color:white;
+cursor:pointer;
+}
+
+button:hover{
+background:#ff1e4d;
+}
+
+@keyframes fade{
+from{opacity:0;}
+to{opacity:1;}
+}
+
+</style>
+</head>
+
+<body>
+
+<audio autoplay loop>
+<source src="love-song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="page">
+
+<h1>Hey Shylah ❤️</h1>
+<p>There’s something I’ve been wanting to tell you...</p>
+
+<button onclick="next1()">Continue</button>
+
+</div>
+
+<script>
+
+function next1(){
+document.getElementById("page").innerHTML=`
+<h1>You Are Special</h1>
+<p>
+You’re not just someone in my life.
+
+You became someone who makes my days better,
+my smile bigger,
+and my heart happier.
+</p>
+
+<button onclick="next2()">Next</button>
+`;
+}
+
+function next2(){
+document.getElementById("page").innerHTML=`
+<h1>The Truth...</h1>
+<p>
+Every moment with you makes me realise something.
+
+You are more important to me than you probably know.
+</p>
+
+<button onclick="next3()">Next</button>
+`;
+}
+
+function next3(){
+document.getElementById("page").innerHTML=`
+<h1>But This Isn't Everything...</h1>
+<p>
+I made something special for you.
+
+This is only the beginning of what I want to say.
+</p>
+
+<button onclick="next4()">Open My Message ❤️</button>
+`;
+}
+
+function next4(){
+document.getElementById("page").innerHTML=`
+<h1>Something Special Is Coming</h1>
+<p>
+Very soon I will ask you something important.
+
+And when that moment comes...
+
+I hope your answer will be yes ❤️
+</p>
+
+<button>I'm Curious 👀</button>
+`;
+}
+
+</script>
+
+</body>
+</html>
