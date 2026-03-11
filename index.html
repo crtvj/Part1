@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>A Message For You</title>
 
 <style>
@@ -30,19 +31,14 @@ margin-top:20px;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <h1 id="title">Hey Shylah ❤️</h1>
-<p id="text">I made this just for you.</p>
+<p id="text">I made this page just for you.</p>
 
 <button onclick="nextPage()">Continue</button>
-
-<audio id="music">
-<source src="song.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 
@@ -52,10 +48,8 @@ function nextPage(){
 
 let title = document.getElementById("title");
 let text = document.getElementById("text");
-let music = document.getElementById("music");
 
 if(step === 0){
-music.play();
 title.innerHTML = "There's Something I Want To Tell You";
 text.innerHTML = "You make my days better and my smile bigger.";
 }
