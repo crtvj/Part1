@@ -2,65 +2,75 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>A Message For You</title>
 <style>
-body{
-margin:0;
-padding:0;
-height:100vh;
-width:100vw;
-background: radial-gradient(circle at top, #0b0c17 0%, #1b1d3a 100%);
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-font-family:'Arial', sans-serif;
-color:white;
-text-align:center;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  background: radial-gradient(circle at top, #0b0c17 0%, #1b1d3a 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  text-align: center;
 }
-h1{
-font-size:28px;
-margin:0 20px;
+
+h1 {
+  font-size: 6vw; /* responsive */
+  margin: 0 5vw;
+  word-wrap: break-word;
 }
-p{
-font-size:20px;
-max-width:500px;
-margin:15px 20px 0 20px;
-line-height:1.5;
-min-height:60px;
+
+p {
+  font-size: 4vw; /* responsive */
+  max-width: 90%;
+  margin: 15px auto 0 auto;
+  line-height: 1.5;
+  min-height: 8vh;
 }
-button{
-padding:14px 30px;
-font-size:18px;
-border:none;
-border-radius:30px;
-background:#ff4d6d;
-color:white;
-margin-top:30px;
-cursor:pointer;
-transition:0.3s;
+
+button {
+  padding: 12px 25px;
+  font-size: 4vw;
+  border: none;
+  border-radius: 30px;
+  background: #ff4d6d;
+  color: white;
+  margin-top: 4vh;
+  cursor: pointer;
+  transition: 0.3s;
 }
-button:hover{
-background:#ff1e4d;
+
+button:hover {
+  background: #ff1e4d;
 }
-.heart{
-position:absolute;
-color:#ff4d6d;
-font-size:20px;
-animation:floatUp 5s linear infinite;
-opacity:0.8;
+
+/* Hearts animation */
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+  opacity: 0.8;
 }
-@keyframes floatUp{
-0%{transform:translateY(0) scale(1);}
-100%{transform:translateY(-100vh) scale(1.3); opacity:0;}
+
+@keyframes floatUp {
+  0% {transform: translateY(0) scale(1);}
+  100% {transform: translateY(-100vh) scale(1.3); opacity:0;}
 }
-.typing{
-border-right:2px solid white;
-white-space:nowrap;
-overflow:hidden;
-display:inline-block;
+
+/* Typing effect */
+.typing {
+  border-right: 2px solid white;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
 }
 </style>
 </head>
@@ -76,11 +86,11 @@ display:inline-block;
 
 <script>
 const messages = [
-"There's something I want to tell you...",
-"You make my days better and my smile bigger.",
-"You became someone very special in my life.",
-"This isn't everything I want to say...",
-"Something special is coming soon ❤️"
+  "There's something I want to tell you...",
+  "You make my days better and my smile bigger.",
+  "You became someone very special in my life.",
+  "This isn't everything I want to say...",
+  "Something special is coming soon ❤️"
 ];
 
 let step = 0;
@@ -89,50 +99,48 @@ const text = document.getElementById("text");
 const btn = document.getElementById("btn");
 const music = document.getElementById("music");
 
-// Typing effect
-function typeText(msg, callback){
-text.innerHTML = '';
-let i=0;
-let interval = setInterval(()=>{
-text.innerHTML += msg[i];
-i++;
-if(i>=msg.length){clearInterval(interval); if(callback) callback();}
-},50);
+// Typing effect function
+function typeText(msg, callback) {
+  text.innerHTML = '';
+  let i = 0;
+  let interval = setInterval(() => {
+    text.innerHTML += msg[i];
+    i++;
+    if(i >= msg.length){
+      clearInterval(interval);
+      if(callback) callback();
+    }
+  }, 50);
 }
 
-// Floating hearts
+// Create floating hearts
 function createHeart(){
-const heart = document.createElement('div');
-heart.classList.add('heart');
-heart.innerHTML='❤️';
-heart.style.left=Math.random()*100+'vw';
-heart.style.fontSize=(15+Math.random()*30)+'px';
-heart.style.animationDuration=(3+Math.random()*3)+'s';
-document.body.appendChild(heart);
-setTimeout(()=>{heart.remove()},5000);
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML='❤️';
+  heart.style.left=Math.random()*100+'vw';
+  heart.style.fontSize=(15+Math.random()*30)+'px';
+  heart.style.animationDuration=(3+Math.random()*3)+'s';
+  document.body.appendChild(heart);
+  setTimeout(()=>{heart.remove()},5000);
 }
 setInterval(createHeart, 500);
 
 // Button click
-btn.addEventListener('click', async ()=>{
-// Try to play music on first click
-if(step === 0){
-try{
-await music.play();
-}catch(err){
-console.log("Music blocked on mobile, try tapping again");
-}
-btn.innerText = "Next";
-}
+btn.addEventListener('click', async () => {
+  // Play song immediately
+  try { await music.play(); } catch(e) {}
+  btn.innerText = "Next";
 
-if(step < messages.length){
-typeText(messages[step]);
-step++;
-}else{
-title.innerHTML="Be Ready ❤️";
-text.innerHTML="Very soon I will ask you something important...";
-btn.style.display='none';
-}
+  // Show messages
+  if(step < messages.length){
+    typeText(messages[step]);
+    step++;
+  } else {
+    title.innerHTML = "Be Ready ❤️";
+    text.innerHTML = "Very soon I will ask you something important...";
+    btn.style.display='none';
+  }
 });
 </script>
 
