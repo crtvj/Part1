@@ -1,33 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>A Message For You</title>
 
 <style>
-
 body{
-background:black;
-color:white;
-font-family:Arial;
+margin:0;
+padding:0;
+height:100vh;
+width:100vw;
+background: radial-gradient(circle at top, #0b0c17 0%, #1b1d3a 100%);
+overflow:hidden;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-text-align:center;
 flex-direction:column;
-padding:20px;
+font-family:'Arial', sans-serif;
+color:white;
+text-align:center;
+}
+
+h1{
+font-size:28px;
+margin:0 20px;
+}
+
+p{
+font-size:20px;
+max-width:500px;
+margin:15px 20px 0 20px;
+line-height:1.5;
+min-height:60px;
 }
 
 button{
-padding:14px 25px;
+padding:14px 30px;
 font-size:18px;
 border:none;
 border-radius:30px;
 background:#ff4d6d;
 color:white;
-margin-top:20px;
+margin-top:30px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:#ff1e4d;
+}
+
+/* Hearts animation */
+.heart{
+position:absolute;
+color:#ff4d6d;
+font-size:20px;
+animation:floatUp 5s linear infinite;
+opacity:0.8;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0) scale(1);}
+100%{transform:translateY(-100vh) scale(1.3); opacity:0;}
+}
+
+/* Typing text effect */
+.typing{
+border-right:2px solid white;
+white-space:nowrap;
+overflow:hidden;
+display:inline-block;
 }
 
 </style>
@@ -36,43 +79,71 @@ margin-top:20px;
 <body>
 
 <h1 id="title">Hey Shylah ❤️</h1>
-<p id="text">I made this page just for you.</p>
+<p id="text" class="typing">I made this page just for you...</p>
+<button id="btn">Continue</button>
 
-<button onclick="nextPage()">Continue</button>
+<audio id="music">
+<source src="song.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+// Steps messages
+const messages = [
+"There's something I want to tell you...",
+"You make my days better and my smile bigger.",
+"You became someone very special in my life.",
+"This isn't everything I want to say...",
+"Something special is coming soon ❤️"
+];
 
 let step = 0;
+const title = document.getElementById("title");
+const text = document.getElementById("text");
+const btn = document.getElementById("btn");
+const music = document.getElementById("music");
 
-function nextPage(){
-
-let title = document.getElementById("title");
-let text = document.getElementById("text");
-
-if(step === 0){
-title.innerHTML = "There's Something I Want To Tell You";
-text.innerHTML = "You make my days better and my smile bigger.";
+// Typing function
+function typeText(message, callback){
+text.innerHTML = '';
+let i=0;
+let interval = setInterval(()=>{
+text.innerHTML += message[i];
+i++;
+if(i>=message.length){
+clearInterval(interval);
+if(callback) callback();
+}
+},50);
 }
 
-else if(step === 1){
-title.innerHTML = "The Truth";
-text.innerHTML = "You became someone very special in my life.";
+// Heart animation
+function createHeart(){
+const heart = document.createElement('div');
+heart.classList.add('heart');
+heart.innerHTML='❤️';
+heart.style.left=Math.random()*100+'vw';
+heart.style.fontSize=(15+Math.random()*30)+'px';
+heart.style.animationDuration=(3+Math.random()*3)+'s';
+document.body.appendChild(heart);
+setTimeout(()=>{heart.remove()},5000);
 }
 
-else if(step === 2){
-title.innerHTML = "But This Isn't Everything...";
-text.innerHTML = "Something special is coming soon.";
-}
+setInterval(createHeart, 500);
 
-else if(step === 3){
-title.innerHTML = "Be Ready ❤️";
-text.innerHTML = "Soon I will ask you something important.";
-}
+btn.addEventListener('click', ()=>{
+// Start music on first click
+if(step==0) music.play();
 
+// Show message
+if(step<messages.length){
+typeText(messages[step]);
 step++;
-
+}else{
+title.innerHTML="Be Ready ❤️";
+text.innerHTML="Very soon I will ask you something important...";
+btn.style.display='none';
 }
-
+});
 </script>
 
 </body>
