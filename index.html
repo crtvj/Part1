@@ -1,49 +1,170 @@
-const messages = [
-  "There's something I want to tell you...",
-  "You make my days better and my smile bigger.",
-  "You became someone very special in my life.",
-  "This isn't everything I want to say...",
-  "Something special is coming soon ❤️"
-];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Message For You</title>
 
-let step = 0;
-const title = document.getElementById("title");
-const text = document.getElementById("text");
-const btn = document.getElementById("btn");
-const music = document.getElementById("music");
+<style>
 
-// Typing effect
-function typeText(msg, callback) {
-  text.innerHTML = '';
-  let i = 0;
-  let interval = setInterval(() => {
-    text.innerHTML += msg[i];
-    i++;
-    if(i >= msg.length){
-      clearInterval(interval);
-      if(callback) callback();
-    }
-  },50);
+html,body{
+margin:0;
+padding:0;
+height:100%;
+width:100%;
+background: radial-gradient(circle at top,#0b0c17 0%,#1b1d3a 100%);
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+font-family:Arial,sans-serif;
+color:white;
+text-align:center;
+overflow:hidden;
 }
 
-// Button click
-btn.addEventListener('click', async () => {
+h1{
+font-size:6vw;
+margin:0 5vw;
+max-height:20vh;
+word-wrap:break-word;
+}
 
-  // Play music on first click
-  try { await music.play(); } catch(e) {}
+p{
+font-size:4.2vw;
+max-width:90%;
+margin-top:2vh;
+line-height:1.5;
+max-height:35vh;
+overflow-y:auto;
+}
 
-  btn.innerText = "Next";
+button{
+padding:12px 25px;
+font-size:4vw;
+border:none;
+border-radius:30px;
+background:#ff4d6d;
+color:white;
+margin-top:4vh;
+cursor:pointer;
+transition:0.3s;
+}
 
-  if(step < messages.length){
-    typeText(messages[step]);
-    step++;
-  }
+button:hover{
+background:#ff1e4d;
+}
 
-  // After last message, hide button
-  if(step === messages.length){
-    setTimeout(() => {
-      btn.style.display = "none";
-    }, 2000);
-  }
+/* floating hearts */
+
+.heart{
+position:absolute;
+color:#ff4d6d;
+font-size:20px;
+animation:floatUp 5s linear infinite;
+opacity:0.8;
+}
+
+@keyframes floatUp{
+0%{transform:translateY(0) scale(1);}
+100%{transform:translateY(-100vh) scale(1.3);opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1 id="title">Hey Shylah ❤️</h1>
+
+<p id="text">I made this page just for you...</p>
+
+<button id="btn">Start</button>
+
+<audio id="music" playsinline preload="auto">
+<source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+const messages=[
+"There's something I want to tell you...",
+"You make my days better and my smile bigger.",
+"You became someone very special in my life.",
+"This isn't everything I wanted to say...",
+"But I'll end it here ❤️"
+];
+
+let step=0;
+
+const text=document.getElementById("text");
+const btn=document.getElementById("btn");
+const music=document.getElementById("music");
+
+// typing effect
+function typeText(msg){
+text.innerHTML="";
+let i=0;
+
+let interval=setInterval(()=>{
+text.innerHTML+=msg[i];
+i++;
+
+if(i>=msg.length){
+clearInterval(interval);
+}
+
+},50);
+}
+
+// floating hearts
+function createHeart(){
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(15+Math.random()*25)+"px";
+heart.style.animationDuration=(3+Math.random()*3)+"s";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},5000);
+
+}
+
+setInterval(createHeart,500);
+
+// button click
+btn.addEventListener("click",async()=>{
+
+if(step===0){
+try{
+await music.play();
+}catch(e){}
+btn.innerText="Next";
+}
+
+if(step<messages.length){
+typeText(messages[step]);
+step++;
+}
+
+if(step===messages.length){
+
+setTimeout(()=>{
+btn.style.display="none";
+},2000);
+
+}
 
 });
+
+</script>
+
+</body>
+</html>
