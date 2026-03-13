@@ -1,90 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>A Message For You</title>
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-  background: radial-gradient(circle at top, #0b0c17 0%, #1b1d3a 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  color: white;
-  text-align: center;
-}
-
-h1 {
-  font-size: 6vw; /* responsive */
-  margin: 0 5vw;
-  word-wrap: break-word;
-}
-
-p {
-  font-size: 4vw; /* responsive */
-  max-width: 90%;
-  margin: 15px auto 0 auto;
-  line-height: 1.5;
-  min-height: 8vh;
-}
-
-button {
-  padding: 12px 25px;
-  font-size: 4vw;
-  border: none;
-  border-radius: 30px;
-  background: #ff4d6d;
-  color: white;
-  margin-top: 4vh;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-button:hover {
-  background: #ff1e4d;
-}
-
-/* Hearts animation */
-.heart {
-  position: absolute;
-  color: #ff4d6d;
-  font-size: 20px;
-  animation: floatUp 5s linear infinite;
-  opacity: 0.8;
-}
-
-@keyframes floatUp {
-  0% {transform: translateY(0) scale(1);}
-  100% {transform: translateY(-100vh) scale(1.3); opacity:0;}
-}
-
-/* Typing effect */
-.typing {
-  border-right: 2px solid white;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-}
-</style>
-</head>
-<body>
-
-<h1 id="title">Hey Shylah ❤️</h1>
-<p id="text" class="typing">I made this page just for you...</p>
-<button id="btn">Start</button>
-
-<audio id="music" playsinline preload="auto">
-<source src="song.mp3" type="audio/mpeg">
-</audio>
-
-<script>
 const messages = [
   "There's something I want to tell you...",
   "You make my days better and my smile bigger.",
@@ -99,7 +12,7 @@ const text = document.getElementById("text");
 const btn = document.getElementById("btn");
 const music = document.getElementById("music");
 
-// Typing effect function
+// Typing effect
 function typeText(msg, callback) {
   text.innerHTML = '';
   let i = 0;
@@ -110,39 +23,27 @@ function typeText(msg, callback) {
       clearInterval(interval);
       if(callback) callback();
     }
-  }, 50);
+  },50);
 }
-
-// Create floating hearts
-function createHeart(){
-  const heart = document.createElement('div');
-  heart.classList.add('heart');
-  heart.innerHTML='❤️';
-  heart.style.left=Math.random()*100+'vw';
-  heart.style.fontSize=(15+Math.random()*30)+'px';
-  heart.style.animationDuration=(3+Math.random()*3)+'s';
-  document.body.appendChild(heart);
-  setTimeout(()=>{heart.remove()},5000);
-}
-setInterval(createHeart, 500);
 
 // Button click
 btn.addEventListener('click', async () => {
-  // Play song immediately
+
+  // Play music on first click
   try { await music.play(); } catch(e) {}
+
   btn.innerText = "Next";
 
-  // Show messages
   if(step < messages.length){
     typeText(messages[step]);
     step++;
-  } else {
-    title.innerHTML = "Be Ready ❤️";
-    text.innerHTML = "Very soon I will ask you something important...";
-    btn.style.display='none';
   }
-});
-</script>
 
-</body>
-</html>
+  // After last message, hide button
+  if(step === messages.length){
+    setTimeout(() => {
+      btn.style.display = "none";
+    }, 2000);
+  }
+
+});
